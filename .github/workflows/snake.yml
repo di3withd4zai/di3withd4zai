@@ -1,0 +1,29 @@
+
+name: Purple Snake
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate purple snake
+        uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: di3withd4zai
+          outputs: |
+            dist/github-snake.svg?color_snake=#B58AFF&color_dots=#12091F,#35204D,#62338E,#9966CC,#D8B4FE
+
+      - name: Publish animation
+        uses: crazy-max/ghaction-github-pages@v5
+        with:
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
